@@ -122,12 +122,12 @@ class LEA_GCN:
         graph_info = self.unzip_laplace(graph_matrix)
 
         ego_embeddings = tf.concat([self.all_weights['item_embedding_A'], self.all_weights['user_embedding'],
-                                    self.all_weights['item_embedding_B']], axis=0)  # 基本结点表示
+                                    self.all_weights['item_embedding_B']], axis=0)
         all_embeddings = [ego_embeddings]
         for k in range(0, self.n_layers):
             temp_embed = []
             for f in range(args.n_fold):
-                temp_embed.append(tf.sparse_tensor_dense_matmul(graph_info[f], ego_embeddings))  # 把结点表示加上额外的大阵信息
+                temp_embed.append(tf.sparse_tensor_dense_matmul(graph_info[f], ego_embeddings))
 
             # sum messages of neighbors.
             side_embeddings = tf.concat(temp_embed, 0)
